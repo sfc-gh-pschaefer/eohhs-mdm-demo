@@ -21,7 +21,7 @@ Two apps from one codebase (`app/`): the hub Resident Index and the MassHealth M
 
 - Snowflake CLI (`snow`) with a named connection
 - Role SYSADMIN (or equivalent: create databases, procedures, application services)
-- Warehouse `EOHHS_WH`: `CREATE WAREHOUSE IF NOT EXISTS EOHHS_WH WAREHOUSE_SIZE = 'MEDIUM';`
+- Warehouse `EOHHS_WH`: created automatically by `run_pipeline.sh` if it does not exist (Medium, auto-suspend 60s)
 - Cortex `AI_COMPLETE` with `claude-sonnet-4-5` available in your region (or cross-region inference enabled)
 - Snowflake App Runtime enabled in the account
 - Python 3.10+ (standard library only), Node 20+

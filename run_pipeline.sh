@@ -6,6 +6,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 CONN="${1:-${SNOWFLAKE_CONNECTION:-default}}"
 mkdir -p logs
+snow sql -c "$CONN" -q "USE ROLE SYSADMIN; CREATE WAREHOUSE IF NOT EXISTS EOHHS_WH WAREHOUSE_SIZE = 'MEDIUM' AUTO_SUSPEND = 60 AUTO_RESUME = TRUE INITIALLY_SUSPENDED = TRUE" > logs/warehouse.log 2>&1 \
+  && echo "ok  warehouse EOHHS_WH" || { echo "FAILED: could not create EOHHS_WH (see logs/warehouse.log)"; exit 1; }
 python3 generate_data.py > logs/generate.log
 python3 render.py > logs/render.log
 
