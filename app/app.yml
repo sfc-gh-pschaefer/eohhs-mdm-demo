@@ -1,0 +1,27 @@
+# Snowflake App Runtime build manifest (build-only; snowflake.yml holds the
+# deployment target).
+#
+# Two fixes over the plugin template:
+#   1. Phases must be `commands:` lists. The template's `install: npm install`
+#      shorthand is rejected ("no String-argument constructor ... InstallSection").
+#   2. The runtime image prunes node_modules, so `next start` fails with
+#      "next: not found". The app builds as Next.js standalone (next.config.ts)
+#      and runs its self-contained server.js. The template has no public/ dir,
+#      so only .next/static needs copying.
+#
+# Run server.js directly. Do not wrap it in `sh -c "..."`: the runtime
+# tokenizes the string into separate argv entries, so the shell runs only the
+# first word (an env assignment) and exits immediately. App Runtime supplies
+# PORT and HOSTNAME to the process.
+
+install:
+  commands:
+    - ["npm", "ci", "--include=dev"]
+
+build:
+  commands:
+    - ["npm", "run", "build"]
+    - ["cp", "-r", ".next/static", ".next/standalone/.next/static"]
+
+run:
+  command: ["node", ".next/standalone/server.js"]

@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+output
+.env*
+!.env.example
+*.log
+snowflake.log
+.DS_Store
+next-env.d.ts

@@ -1,0 +1,22 @@
+# dependencies and builds
+node_modules/
+.next/
+out/
+build/
+sql/build/
+*.tsbuildinfo
+
+# local runs
+logs/
+*.log
+data/
+
+# secrets and local config
+.env*
+!.env.example
+*.p8
+*.pem
+config.toml
+connections.toml
+
+.DS_Store
